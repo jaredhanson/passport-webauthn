@@ -1,0 +1,21 @@
+language: "node_js"
+node_js:
+  - "5"
+  - "4"
+  - "3" # io.js
+  - "2" # io.js
+  - "1" # io.js
+  - "0.12"
+
+
+before_install:
+  - "npm install istanbul@0.4.x -g"
+  - "npm install coveralls@2.x.x -g"
+
+script:
+  - "make test-cov"
+
+after_success:
+  - "make report-cov"
+
+sudo: false
