@@ -17,6 +17,7 @@
   "main": "./lib",
   "dependencies": {
     "base64url": "^3.0.1",
+    "cbor": "^5.1.0",
     "passport-strategy": "1.x.x"
   },
   "devDependencies": {
