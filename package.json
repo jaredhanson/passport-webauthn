@@ -25,7 +25,8 @@
   "devDependencies": {
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
-    "chai": "^3.0.0"
+    "chai": "^3.0.0",
+    "chai-passport-strategy": "0.1.x"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha test/*.test.js"

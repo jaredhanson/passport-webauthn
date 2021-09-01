@@ -1,13 +1,13 @@
 /* global describe, it */
 
-var pkg = require('..');
-var expect = require('chai').expect;
+var strategy = require('..');
 
 
 describe('passport-webauthn', function() {
   
-  it('should export hello world', function() {
-    expect(pkg.hello).to.equal('world');
+  it('should export Strategy constructor directly from package', function() {
+    expect(strategy).to.be.a('function');
+    expect(strategy).to.equal(strategy.Strategy);
   });
   
 });
