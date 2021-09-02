@@ -7,7 +7,62 @@ var chai = require('chai')
 
 describe('Strategy', function() {
 
-  describe('registering a valid credential from YubiKey 5C', function() {
+  describe('registering a valid credential from YubiKey 5C with no attestation', function() {
+    var verify = sinon.spy(function(id, cb) {
+    });
+    var register = sinon.spy(function(id, publicKey, cb) {
+      console.log('REGISTER!');
+      console.log(id);
+      console.log(publicKey)
+      
+      return cb(null, { id: '500' });
+    });
+  
+    var strategy = new Strategy(verify, register);
+    var user;
+  
+    before(function(done) {
+      chai.passport(strategy)
+        .success(function(u) {
+          user = u;
+          done();
+        })
+        .error(function(err) {
+          console.log(err);
+        })
+        .req(function(req) {
+          req.body = {
+            "rawId": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
+            "response": {
+              "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVjESZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NBAAAAOgAAAAAAAAAAAAAAAAAAAAAAQJ_dGSPhcDwPR0-Y7WYp7N90bWntWc9cy56A0fcgo-ScM9jwenyUdCgj2XoTkQfobePJkX23AOddnJw8n20ENDmlAQIDJiABIVggp-ZH3WpsBVUojVZ1D1BufQoSMplIVbiKl-g4PojQCfkiWCBkt-eEtwaQkv2aRTTLMVHr0gucag7QbOA0m_WyFtuXIg",
+              "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
+            },
+            "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
+            "type": "public-key"
+          };
+        })
+        .authenticate();
+    });
+  
+    it('should register credential', function() {
+      var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEp+ZH3WpsBVUojVZ1D1BufQoSMplI\n' +
+'VbiKl+g4PojQCflkt+eEtwaQkv2aRTTLMVHr0gucag7QbOA0m/WyFtuXIg==\n' +
+'-----END PUBLIC KEY-----\n';
+      
+      expect(register).to.be.calledWith('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ', publicKey);
+    });
+  
+    it('should supply user', function() {
+      expect(user).to.deep.equal({ id: '500' });
+    });
+    
+    it('should not call verify', function() {
+      expect(verify).to.not.have.been.called;
+    });
+  });
+
+  describe.only('registering a valid credential from YubiKey 5C', function() {
     var verify = sinon.spy(function(id, cb) {
     });
     var register = sinon.spy(function(id, publicKey, cb) {
@@ -93,6 +148,61 @@ describe('Strategy', function() {
               "clientDataJSON": "eyJjaGFsbGVuZ2UiOiJNVEl6TkEiLCJjbGllbnRFeHRlbnNpb25zIjp7fSwiaGFzaEFsZ29yaXRobSI6IlNIQS0yNTYiLCJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIn0"
             },
             "id": "GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "type": "public-key"
+          };
+        })
+        .authenticate();
+    });
+  
+    it('should register credential', function() {
+      var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMXwd2qrp2AidRk9IBDeAxxEUU43g\n' +
+'V+dShmc0kKQoWOhxDyslVXoA1M7RYzrpFrGWEK3z1Hk9Wso1GeUBnPrXJQ==\n' +
+'-----END PUBLIC KEY-----\n';
+      
+      expect(register).to.be.calledWith('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', publicKey);
+    });
+  
+    it('should supply user', function() {
+      expect(user).to.deep.equal({ id: '500' });
+    });
+    
+    it('should not call verify', function() {
+      expect(verify).to.not.have.been.called;
+    });
+  });
+  
+  describe.skip('registering a valid credential from TouchID', function() {
+    var verify = sinon.spy(function(id, cb) {
+    });
+    var register = sinon.spy(function(id, publicKey, cb) {
+      console.log('REGISTER!');
+      console.log(id);
+      console.log(publicKey)
+      
+      return cb(null, { id: '500' });
+    });
+  
+    var strategy = new Strategy(verify, register);
+    var user;
+  
+    before(function(done) {
+      chai.passport(strategy)
+        .success(function(u) {
+          user = u;
+          done();
+        })
+        .error(function(err) {
+          console.log(err);
+        })
+        .req(function(req) {
+          req.body = {
+            "rawId": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
+            "response": {
+              "attestationObject": "o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZyZjc2lnWEcwRQIhAKNUl2n5uMyTfhC4Sxn7884NTkBM01z5FWu_M-iUkddUAiBTdF11L7ajh9TfmBAJmeQXxU3_WKSUa37Mu_Za_cq7gWhhdXRoRGF0YVjeSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFXW8RXK3OAAI1vMYKZIsLJfHwVQMAWgCCQapKcA6_-G2jU7dv7v5BvrBqmZ6-Fmet8vddbmPageruiU3AfvTEJMkM67kzgUYvbypbqgGagVoqNrRXpvkoK1A-0SO4vwaWo7OTerhv3AncnCcBPuF47aUBAgMmIAEhWCDArUsWj0-YGEQ9b8sJoRkxEqHxQBDChB5Q5EkNcdeCVCJYIMUSJRYHirDnYo39p5Fi6pvqMNNjWgixCWCbVbAVzEjE",
+              "clientDataJSON": "eyJjaGFsbGVuZ2UiOiJNVEl6TkEiLCJleHRyYV9rZXlzX21heV9iZV9hZGRlZF9oZXJlIjoiZG8gbm90IGNvbXBhcmUgY2xpZW50RGF0YUpTT04gYWdhaW5zdCBhIHRlbXBsYXRlLiBTZWUgaHR0cHM6Ly9nb28uZ2wveWFiUGV4Iiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwidHlwZSI6IndlYmF1dGhuLmNyZWF0ZSJ9"
+            },
+            "id": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
             "type": "public-key"
           };
         })
