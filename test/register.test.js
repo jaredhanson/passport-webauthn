@@ -228,7 +228,63 @@ describe('Strategy', function() {
     });
   });
   
-  describe.skip('registering a valid credential from TouchID', function() {
+  describe('registering a valid credential from TouchID with no attestation', function() {
+    var verify = sinon.spy(function(id, cb) {
+    });
+    var register = sinon.spy(function(id, publicKey, cb) {
+      console.log('REGISTER!');
+      console.log(id);
+      console.log(publicKey)
+      
+      return cb(null, { id: '500' });
+    });
+  
+    var strategy = new Strategy(verify, register);
+    var user;
+  
+    before(function(done) {
+      chai.passport(strategy)
+        .success(function(u) {
+          user = u;
+          done();
+        })
+        .error(function(err) {
+          console.log(err);
+        })
+        .req(function(req) {
+          req.body = {
+            "rawId": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
+            "response": {
+              "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVi3SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFYTEXGq3OAAI1vMYKZIsLJfHwVQMAMwG6ruDv1OXRO9cOE7ifs1tSK6XQoGX7aZ0foSqn01oXjHPEmSGpMu6lwMog8z0qkbT1AqUBAgMmIAEhWCCWapPIMbsjBfAYSMlXbNAPmAqm6kd1SfOKZSvh0kBEQCJYIHFCHJBQz0Dn8rwBPqWuBulNe-ghAS5nrDX54sATiVsk",
+              "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+              "transports": [ "internal" ]
+            },
+            "id": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
+            "type": "public-key"
+          };
+        })
+        .authenticate();
+    });
+  
+    it('should register credential', function() {
+      var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAElmqTyDG7IwXwGEjJV2zQD5gKpupH\n' +
+'dUnzimUr4dJAREBxQhyQUM9A5/K8AT6lrgbpTXvoIQEuZ6w1+eLAE4lbJA==\n' +
+'-----END PUBLIC KEY-----\n';
+      
+      expect(register).to.be.calledWith('Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC', publicKey);
+    });
+  
+    it('should supply user', function() {
+      expect(user).to.deep.equal({ id: '500' });
+    });
+    
+    it('should not call verify', function() {
+      expect(verify).to.not.have.been.called;
+    });
+  });
+  
+  describe('registering a valid credential from TouchID', function() {
     var verify = sinon.spy(function(id, cb) {
     });
     var register = sinon.spy(function(id, publicKey, cb) {
@@ -267,11 +323,11 @@ describe('Strategy', function() {
   
     it('should register credential', function() {
       var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
-'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMXwd2qrp2AidRk9IBDeAxxEUU43g\n' +
-'V+dShmc0kKQoWOhxDyslVXoA1M7RYzrpFrGWEK3z1Hk9Wso1GeUBnPrXJQ==\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwK1LFo9PmBhEPW/LCaEZMRKh8UAQ\n' +
+'woQeUORJDXHXglTFEiUWB4qw52KN/aeRYuqb6jDTY1oIsQlgm1WwFcxIxA==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', publicKey);
+      expect(register).to.be.calledWith('AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt', publicKey);
     });
   
     it('should supply user', function() {
