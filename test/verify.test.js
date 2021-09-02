@@ -7,12 +7,12 @@ var chai = require('chai')
 
 describe('Strategy', function() {
   
-  describe.only('handling a valid credentials', function() {
+  describe('verifying a valid credential', function() {
     var verify = sinon.spy(function(id, cb) {
       var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE/6j9N8S3dBWutrvVJBB3MrU5uipV\n' +
 'D8+rZ0GboVEJMPT3HZmICG/06CAPSqcDchP+qLa0N8Tvp9FSmguCnvLtZg==\n' +
-'-----END PUBLIC KEY-----';
+'-----END PUBLIC KEY-----\n';
       
       return cb(null, { id: '500' }, publicKey);
     });
