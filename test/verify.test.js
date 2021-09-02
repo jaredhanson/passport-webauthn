@@ -27,6 +27,9 @@ describe('Strategy', function() {
           done();
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             rawId: 'JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q',
             response: {

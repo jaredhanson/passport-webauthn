@@ -31,6 +31,9 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
             "response": {
@@ -86,6 +89,9 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q",
             "response": {
@@ -141,6 +147,9 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
             "response": {
@@ -197,6 +206,9 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
             "response": {
@@ -252,6 +264,9 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
             "response": {
@@ -284,7 +299,7 @@ describe('Strategy', function() {
     });
   });
   
-  describe('registering a valid credential from TouchID', function() {
+  describe('registering a valid credential from TouchID with direct attestation in packed format', function() {
     var verify = sinon.spy(function(id, cb) {
     });
     var register = sinon.spy(function(id, publicKey, cb) {
@@ -308,11 +323,15 @@ describe('Strategy', function() {
           console.log(err);
         })
         .req(function(req) {
+          req.headers.host = 'localhost:3000';
+          req.connection = {};
+          
           req.body = {
             "rawId": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
             "response": {
               "attestationObject": "o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZyZjc2lnWEcwRQIhAKNUl2n5uMyTfhC4Sxn7884NTkBM01z5FWu_M-iUkddUAiBTdF11L7ajh9TfmBAJmeQXxU3_WKSUa37Mu_Za_cq7gWhhdXRoRGF0YVjeSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFXW8RXK3OAAI1vMYKZIsLJfHwVQMAWgCCQapKcA6_-G2jU7dv7v5BvrBqmZ6-Fmet8vddbmPageruiU3AfvTEJMkM67kzgUYvbypbqgGagVoqNrRXpvkoK1A-0SO4vwaWo7OTerhv3AncnCcBPuF47aUBAgMmIAEhWCDArUsWj0-YGEQ9b8sJoRkxEqHxQBDChB5Q5EkNcdeCVCJYIMUSJRYHirDnYo39p5Fi6pvqMNNjWgixCWCbVbAVzEjE",
-              "clientDataJSON": "eyJjaGFsbGVuZ2UiOiJNVEl6TkEiLCJleHRyYV9rZXlzX21heV9iZV9hZGRlZF9oZXJlIjoiZG8gbm90IGNvbXBhcmUgY2xpZW50RGF0YUpTT04gYWdhaW5zdCBhIHRlbXBsYXRlLiBTZWUgaHR0cHM6Ly9nb28uZ2wveWFiUGV4Iiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwidHlwZSI6IndlYmF1dGhuLmNyZWF0ZSJ9"
+              "clientDataJSON": "eyJjaGFsbGVuZ2UiOiJNVEl6TkEiLCJleHRyYV9rZXlzX21heV9iZV9hZGRlZF9oZXJlIjoiZG8gbm90IGNvbXBhcmUgY2xpZW50RGF0YUpTT04gYWdhaW5zdCBhIHRlbXBsYXRlLiBTZWUgaHR0cHM6Ly9nb28uZ2wveWFiUGV4Iiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwidHlwZSI6IndlYmF1dGhuLmNyZWF0ZSJ9",
+              "transports": [ "internal" ]
             },
             "id": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
             "type": "public-key"
