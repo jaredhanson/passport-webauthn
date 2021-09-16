@@ -2,20 +2,16 @@
 
 var chai = require('chai')
   , sinon = require('sinon')
-  , Strategy = require('../lib/strategy');
+  , Strategy = require('../lib/strategy2');
 
 
-describe('Strategy', function() {
+describe('Strategy2', function() {
 
   describe('registering a valid credential from YubiKey 5C with no attestation', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
-      return cb(null, { id: '500' });
+    var register = sinon.spy(function(user, id, publicKey, cb) {
+      return cb(null, true);
     });
   
     var strategy = new Strategy(verify, register);
@@ -33,6 +29,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
@@ -53,7 +50,7 @@ describe('Strategy', function() {
 'VbiKl+g4PojQCflkt+eEtwaQkv2aRTTLMVHr0gucag7QbOA0m/WyFtuXIg==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ', publicKey);
     });
   
     it('should supply user', function() {
@@ -68,12 +65,8 @@ describe('Strategy', function() {
   describe('registering a valid credential from YubiKey 5C with direct attestation in fido-u2f format', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
-      return cb(null, { id: '500' });
+    var register = sinon.spy(function(user, id, publicKey, cb) {
+      return cb(null, true);
     });
   
     var strategy = new Strategy(verify, register);
@@ -91,6 +84,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q",
@@ -111,7 +105,7 @@ describe('Strategy', function() {
 'D8+rZ0GboVEJMPT3HZmICG/06CAPSqcDchP+qLa0N8Tvp9FSmguCnvLtZg==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q', publicKey);
     });
   
     it('should supply user', function() {
@@ -126,11 +120,7 @@ describe('Strategy', function() {
   describe('registering a valid credential from YubiKey 5C with direct attestation in packed format', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
+    var register = sinon.spy(function(user, id, publicKey, cb) {
       return cb(null, { id: '500' });
     });
   
@@ -149,6 +139,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
@@ -170,7 +161,7 @@ describe('Strategy', function() {
 'RqQlUaVoVKm7XTAciKioZJxh8i9dm8znJlMwnEeqDP5BNwonyqfTBTnC6Q==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ', publicKey);
     });
   
     it('should supply user', function() {
@@ -185,12 +176,8 @@ describe('Strategy', function() {
   describe('registering a valid credential from Soft U2F', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
-      return cb(null, { id: '500' });
+    var register = sinon.spy(function(user, id, publicKey, cb) {
+      return cb(null, true);
     });
   
     var strategy = new Strategy(verify, register);
@@ -208,6 +195,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -228,7 +216,7 @@ describe('Strategy', function() {
 'V+dShmc0kKQoWOhxDyslVXoA1M7RYzrpFrGWEK3z1Hk9Wso1GeUBnPrXJQ==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', publicKey);
     });
   
     it('should supply user', function() {
@@ -243,12 +231,8 @@ describe('Strategy', function() {
   describe('registering a valid credential from TouchID with no attestation', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
-      return cb(null, { id: '500' });
+    var register = sinon.spy(function(user, id, publicKey, cb) {
+      return cb(null, true);
     });
   
     var strategy = new Strategy(verify, register);
@@ -266,6 +250,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
@@ -287,7 +272,7 @@ describe('Strategy', function() {
 'dUnzimUr4dJAREBxQhyQUM9A5/K8AT6lrgbpTXvoIQEuZ6w1+eLAE4lbJA==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC', publicKey);
     });
   
     it('should supply user', function() {
@@ -302,12 +287,8 @@ describe('Strategy', function() {
   describe('registering a valid credential from TouchID with direct attestation in packed format', function() {
     var verify = sinon.spy(function(id, cb) {
     });
-    var register = sinon.spy(function(id, publicKey, cb) {
-      console.log('REGISTER!');
-      console.log(id);
-      console.log(publicKey)
-      
-      return cb(null, { id: '500' });
+    var register = sinon.spy(function(user, id, publicKey, cb) {
+      return cb(null, true);
     });
   
     var strategy = new Strategy(verify, register);
@@ -325,6 +306,7 @@ describe('Strategy', function() {
         .req(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
+          req.user = { id: '500' };
           
           req.body = {
             "rawId": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
@@ -346,7 +328,7 @@ describe('Strategy', function() {
 'woQeUORJDXHXglTFEiUWB4qw52KN/aeRYuqb6jDTY1oIsQlgm1WwFcxIxA==\n' +
 '-----END PUBLIC KEY-----\n';
       
-      expect(register).to.be.calledWith('AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt', publicKey);
+      expect(register).to.be.calledWith({ id: '500' }, 'AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt', publicKey);
     });
   
     it('should supply user', function() {
