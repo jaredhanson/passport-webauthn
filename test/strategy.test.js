@@ -12,9 +12,17 @@ describe('Strategy', function() {
   });
   
   
-  it.only('should do something to register', function(done) {
-  
-    var strategy = new Strategy(function(){ console.log('VERIFY!'); }, function(){ console.log('REGISTER!');});
+  it('registering a YubiKey 5C with no attestation', function(done) {
+    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
+      expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
+      expect(publicKey).to.equal(
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEp+ZH3WpsBVUojVZ1D1BufQoSMplI\n' +
+'VbiKl+g4PojQCflkt+eEtwaQkv2aRTTLMVHr0gucag7QbOA0m/WyFtuXIg==\n' +
+'-----END PUBLIC KEY-----\n'
+      );
+      return cb(null, { id: '248289761001' });
+    });
   
     chai.passport.use(strategy)
       .request(function(req) {
@@ -34,12 +42,8 @@ describe('Strategy', function() {
         
       })
       .success(function(user, info) {
-        console.log('SUCCESS');
-        console.log(user);
-        console.log(info);
-        
         expect(user).to.deep.equal({ id: '248289761001' });
-        expect(info).to.deep.equal({});
+        expect(info).to.be.undefined;
         done();
       })
       .error(done)
