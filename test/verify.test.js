@@ -21,12 +21,12 @@ describe('Strategy', function() {
     var user;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .success(function(u) {
           user = u;
           done();
         })
-        .req(function(req) {
+        .request(function(req) {
           req.headers.host = 'localhost:3000';
           req.connection = {};
           

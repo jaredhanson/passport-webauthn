@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
-    "chai-passport-strategy": "0.1.x",
+    "chai-passport-strategy": "3.x.x",
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
     "sinon": "^11.1.2",
