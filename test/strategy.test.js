@@ -12,7 +12,7 @@ describe('Strategy', function() {
   });
   
   
-  it('registering a YubiKey 5C with no attestation', function(done) {
+  it('should register a YubiKey 5C with no attestation', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
@@ -26,8 +26,6 @@ describe('Strategy', function() {
   
     chai.passport.use(strategy)
       .request(function(req) {
-        console.log('REQ1');
-        
         req.connection = {};
         req.headers.host = 'localhost:3000';
         req.body = {
@@ -48,7 +46,6 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  
-  });
+  }); // should register a YubiKey 5C with no attestation
   
 });
