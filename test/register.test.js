@@ -5,7 +5,7 @@ var chai = require('chai')
   , Strategy = require('../lib/strategy2');
 
 
-describe('Strategy2', function() {
+describe.skip('Strategy2', function() {
 
   describe('registering a valid credential from YubiKey 5C with no attestation', function() {
     var verify = sinon.spy(function(id, cb) {

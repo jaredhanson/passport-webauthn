@@ -1,13 +1,22 @@
 /* global describe, it */
 
-var strategy = require('..');
+var sinon = require('sinon');
+var pkg = require('..');
 
 
 describe('passport-webauthn', function() {
   
-  it('should export Strategy constructor directly from package', function() {
-    expect(strategy).to.be.a('function');
-    expect(strategy).to.equal(strategy.Strategy);
+  it('should export Strategy constructor as module', function() {
+    expect(pkg).to.be.a('function');
+    expect(pkg).to.equal(pkg.Strategy);
   });
   
+  it('should export Strategy constructor', function() {
+    expect(pkg.Strategy).to.be.a('function');
+  });
+  
+});
+
+afterEach(function() {
+  sinon.restore();
 });
