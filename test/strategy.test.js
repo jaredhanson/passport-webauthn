@@ -353,6 +353,45 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3
   
+  it('should register Google Chrome on Mac OS X without Touch ID with no attestation using flags via level 3', function(done) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, cb) {
+      expect(id).to.equal('noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw');
+      expect(publicKey).to.equal(
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErujwiSbsh53HcaC4ohSuid5DvZbr\n' +
+'AONRIXCYQTX0UFH6pVdJ7FZ7j/obBTXN9FNNK9neay4OjrmUM9oyI9VQKw==\n' +
+'-----END PUBLIC KEY-----\n'
+      );
+      expect(flags).to.deep.equal({
+        userPresent: true,
+        userVerified: true
+      });
+      return cb(null, { id: '248289761001' });
+    }))
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3000';
+        req.body = {
+          "rawId": "noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw",
+          "response": {
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVisSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFAAAAAK3OAAI1vMYKZIsLJfHwVQMAKJ6DLhrmmlS7mwFY7kumdgWK6waWo2IbY5xYL0o5NCFdSyXla7qW6Z-lAQIDJiABIVggrujwiSbsh53HcaC4ohSuid5DvZbrAONRIXCYQTX0UFEiWCD6pVdJ7FZ7j_obBTXN9FNNK9neay4OjrmUM9oyI9VQKw",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+            "transports": [ "internal" ]
+          },
+          "authenticatorAttachment": "platform",
+          "id": "noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw",
+          "type": "public-key"
+        };
+      })
+      .success(function(user, info) {
+        expect(user).to.deep.equal({ id: '248289761001' });
+        expect(info).to.be.undefined;
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should register Google Chrome on Mac OS X without Touch ID with no attestation using flags via level 3
+  
   it('should register YubiKey 4 with no attestation via level 3', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw');
