@@ -193,8 +193,8 @@ describe('Strategy', function() {
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
-        req.headers.host = 'localhost:3000';
         req.connection = {};
+        req.headers.host = 'localhost:3000';
         req.body = {
           "rawId": "GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
           "response": {
@@ -213,6 +213,40 @@ describe('Strategy', function() {
       .error(done)
       .authenticate();
   }); // should register Soft U2F with direct attestation in fido-u2f format
+  
+  it('should register Touch ID with no attestation via level 2', function(done) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+      expect(id).to.equal('Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC');
+      expect(publicKey).to.equal(
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAElmqTyDG7IwXwGEjJV2zQD5gKpupH\n' +
+'dUnzimUr4dJAREBxQhyQUM9A5/K8AT6lrgbpTXvoIQEuZ6w1+eLAE4lbJA==\n' +
+'-----END PUBLIC KEY-----\n'
+      );
+      return cb(null, { id: '248289761001' });
+    }))
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3000';
+        req.body = {
+          "rawId": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
+          "response": {
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVi3SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFYTEXGq3OAAI1vMYKZIsLJfHwVQMAMwG6ruDv1OXRO9cOE7ifs1tSK6XQoGX7aZ0foSqn01oXjHPEmSGpMu6lwMog8z0qkbT1AqUBAgMmIAEhWCCWapPIMbsjBfAYSMlXbNAPmAqm6kd1SfOKZSvh0kBEQCJYIHFCHJBQz0Dn8rwBPqWuBulNe-ghAS5nrDX54sATiVsk",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+            "transports": [ "internal" ]
+          },
+          "id": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
+          "type": "public-key"
+        };
+      })
+      .success(function(user, info) {
+        expect(user).to.deep.equal({ id: '248289761001' });
+        expect(info).to.be.undefined;
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should register Touch ID with no attestation via level 2
   
   it('should register YubiKey 5C with direct attestation in packed format via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
