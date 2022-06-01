@@ -156,7 +156,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register YubiKey 5C with no attestation
   
-  it('registering a valid credential from YubiKey 5C with direct attestation in fido-u2f format', function(done) {
+  it('should register YubiKey 5C with direct attestation in fido-u2f format', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       expect(publicKey).to.equal(
@@ -189,7 +189,45 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  });
+  }); // should register YubiKey 5C with direct attestation in fido-u2f format
+  
+  it('should register YubiKey 5C with direct attestation in packed format', function(done) {
+    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
+      expect(id).to.equal('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ');
+      expect(publicKey).to.equal(
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETRaVPaJos8YJakatxjOVMPS+49GC\n' +
+'RqQlUaVoVKm7XTAciKioZJxh8i9dm8znJlMwnEeqDP5BNwonyqfTBTnC6Q==\n' +
+'-----END PUBLIC KEY-----\n'
+      );
+      return cb(null, { id: '248289761001' });
+    });
+  
+    chai.passport.use(strategy)
+      .request(function(req) {
+        req.headers.host = 'localhost:3000';
+        req.connection = {};
+        req.user = { id: '500' };
+        
+        req.body = {
+          "rawId": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
+          "response": {
+            "attestationObject": "o2NmbXRmcGFja2VkZ2F0dFN0bXSjY2FsZyZjc2lnWEgwRgIhAKB_lCbNBN3KHdrygHJY33EFqjBOcXJ_BgXonuVq1yMDAiEAuBAkFQ_vj_9rShhlogJLrEaTjXvOO7SsvAcwneTaJNJjeDVjgVkCwTCCAr0wggGloAMCAQICBBisRsAwDQYJKoZIhvcNAQELBQAwLjEsMCoGA1UEAxMjWXViaWNvIFUyRiBSb290IENBIFNlcmlhbCA0NTcyMDA2MzEwIBcNMTQwODAxMDAwMDAwWhgPMjA1MDA5MDQwMDAwMDBaMG4xCzAJBgNVBAYTAlNFMRIwEAYDVQQKDAlZdWJpY28gQUIxIjAgBgNVBAsMGUF1dGhlbnRpY2F0b3IgQXR0ZXN0YXRpb24xJzAlBgNVBAMMHll1YmljbyBVMkYgRUUgU2VyaWFsIDQxMzk0MzQ4ODBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHnqOyx8SXAQYiMM0j_rYOUpMXHUg_EAvoWdaw-DlwMBtUbN1G7PyuPj8w-B6e1ivSaNTB69N7O8vpKowq7rTjqjbDBqMCIGCSsGAQQBgsQKAgQVMS4zLjYuMS40LjEuNDE0ODIuMS43MBMGCysGAQQBguUcAgEBBAQDAgUgMCEGCysGAQQBguUcAQEEBBIEEMtpSB6P90A5k-wKJymhVKgwDAYDVR0TAQH_BAIwADANBgkqhkiG9w0BAQsFAAOCAQEAl50Dl9hg-C7hXTEceW66-yL6p-CE2bq0xhu7V_PmtMGKSDe4XDxO2-SDQ_TWpdmxztqK4f7UkSkhcwWOXuHL3WvawHVXxqDo02gluhWef7WtjNr4BIaM-Q6PH4rqF8AWtVwqetSXyJT7cddT15uaSEtsN21yO5mNLh1DBr8QM7Wu-Myly7JWi2kkIm0io1irfYfkrF8uCRqnFXnzpWkJSX1y9U4GusHDtEE7ul6vlMO2TzT566Qay2rig3dtNkZTeEj-6IS93fWxuleYVM_9zrrDRAWVJ-Vt1Zj49WZxWr5DAd0ZETDmufDGQDkSU-IpgD867ydL7b_eP8u9QurWeWhhdXRoRGF0YVjESZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NBAAAAPstpSB6P90A5k-wKJymhVKgAQItfLNzNuagN_WOrzl0dv0zgoJSs_JMRRx88eiaZ5P2PUxzFQVfOVZ3eSMo7TaRSEukqf7LIOGSbQFulAETErVGlAQIDJiABIVggTRaVPaJos8YJakatxjOVMPS-49GCRqQlUaVoVKm7XTAiWCAciKioZJxh8i9dm8znJlMwnEeqDP5BNwonyqfTBTnC6Q",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ",
+            "transports": [ "usb" ]
+          },
+          "id": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
+          "type": "public-key"
+        };
+      })
+      .success(function(user, info) {
+        expect(user).to.deep.equal({ id: '248289761001' });
+        expect(info).to.be.undefined;
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should register YubiKey 5C with direct attestation in packed format
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
