@@ -2,7 +2,7 @@
 
 var chai = require('chai')
   , sinon = require('sinon')
-  , Strategy = require('../lib/strategy2');
+  , Strategy = require('../lib/strategy');
 
 
 describe.skip('Strategy2', function() {
