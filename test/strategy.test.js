@@ -12,7 +12,7 @@ describe('Strategy', function() {
   });
   
   it('should verify credential', function(done) {
-    var strategy = new Strategy(function(id, cb) {
+    chai.passport.use(new Strategy(function(id, cb) {
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       var publicKey =
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -20,9 +20,7 @@ describe('Strategy', function() {
 'D8+rZ0GboVEJMPT3HZmICG/06CAPSqcDchP+qLa0N8Tvp9FSmguCnvLtZg==\n' +
 '-----END PUBLIC KEY-----\n';
       return cb(null, { id: '248289761001' }, publicKey);
-    }, function(){});
-    
-    chai.passport.use(strategy)
+    }, function(){}))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
@@ -48,7 +46,7 @@ describe('Strategy', function() {
   }); // should verify credential
   
   it('should verify Google Chrome on Mac OS X without Touch ID via level 3', function(done) {
-    var strategy = new Strategy(function(id, cb) {
+    chai.passport.use(new Strategy(function(id, cb) {
       expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
       var publicKey =
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -56,9 +54,7 @@ describe('Strategy', function() {
 'sYCSfcQItYWDgr7qFbPLcRIiuS3ejIa4iFHAe01oslaURGWUxtby39TpQA==\n' +
 '-----END PUBLIC KEY-----\n';
       return cb(null, { id: '248289761001' }, publicKey);
-    }, function(){});
-  
-    chai.passport.use(strategy)
+    }, function(){}))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
@@ -85,7 +81,7 @@ describe('Strategy', function() {
   }); // should verify Google Chrome on Mac OS X without Touch ID via level 3
   
   it('should verify YubiKey 4 via level 3', function(done) {
-    var strategy = new Strategy(function(id, cb) {
+    chai.passport.use(new Strategy(function(id, cb) {
       expect(id).to.equal('VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA');
       var publicKey =
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -93,9 +89,7 @@ describe('Strategy', function() {
 'EGu/tcXrRjnscbMNflAnHVHDeb4PzlexGEjGgrsZiuLmlq+ZTOJjOsGOeQ==\n' +
 '-----END PUBLIC KEY-----\n';
       return cb(null, { id: '248289761001' }, publicKey);
-    }, function(){});
-  
-    chai.passport.use(strategy)
+    }, function(){}))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
@@ -122,7 +116,7 @@ describe('Strategy', function() {
   }); // should verify YubiKey 4 via level 3
   
   it('should register YubiKey 5C with no attestation', function(done) {
-    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -131,9 +125,7 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       return cb(null, { id: '248289761001' });
-    });
-  
-    chai.passport.use(strategy)
+    }))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
@@ -157,7 +149,7 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with no attestation
   
   it('should register YubiKey 5C with direct attestation in fido-u2f format', function(done) {
-    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -166,9 +158,7 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       return cb(null, { id: '248289761001' });
-    });
-  
-    chai.passport.use(strategy)
+    }))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
@@ -192,7 +182,7 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with direct attestation in fido-u2f format
   
   it('should register YubiKey 5C with direct attestation in packed format', function(done) {
-    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -201,9 +191,7 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       return cb(null, { id: '248289761001' });
-    });
-  
-    chai.passport.use(strategy)
+    }))
       .request(function(req) {
         req.headers.host = 'localhost:3000';
         req.connection = {};
