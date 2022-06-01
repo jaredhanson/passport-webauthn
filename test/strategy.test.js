@@ -181,7 +181,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register YubiKey 5C with direct attestation in fido-u2f format
   
-  it('should register YubiKey 5C with direct attestation in packed format', function(done) {
+  it('should register YubiKey 5C with direct attestation in packed format via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ');
       expect(publicKey).to.equal(
@@ -195,8 +195,6 @@ describe('Strategy', function() {
       .request(function(req) {
         req.headers.host = 'localhost:3000';
         req.connection = {};
-        req.user = { id: '500' };
-        
         req.body = {
           "rawId": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
           "response": {
@@ -215,11 +213,10 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register YubiKey 5C with direct attestation in packed format
+  }); // should register YubiKey 5C with direct attestation in packed format via level 2
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3', function(done) {
-    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
-      
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -228,9 +225,7 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       return cb(null, { id: '248289761001' });
-    });
-  
-    chai.passport.use(strategy)
+    }))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
