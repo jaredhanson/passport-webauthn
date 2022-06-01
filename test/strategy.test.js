@@ -12,6 +12,43 @@ describe('Strategy', function() {
   });
   
   
+  it('should verify resident key on Google Chrome on Mac OS X without Touch ID via level 3', function(done) {
+    var strategy = new Strategy(function(id, cb) {
+      expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
+      var publicKey =
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESo+uMzzeOSkrHdJFfK98BdlhtydB\n' +
+'sYCSfcQItYWDgr7qFbPLcRIiuS3ejIa4iFHAe01oslaURGWUxtby39TpQA==\n' +
+'-----END PUBLIC KEY-----\n';
+      return cb(null, { id: '248289761001' }, publicKey);
+    }, function(){});
+  
+    chai.passport.use(strategy)
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3000';
+        req.body = {
+          "rawId": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
+          "response": {
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MFAAAAAA",
+            "signature": "MEYCIQCCKxA70welhqy9PZH-sLj09VtYRIkA9w-MryjXfIOc5QIhAOUIqjOk8jkH-vP50sCxRXSb6ZG-iT6bgheMxDHB3JqM",
+            "userHandle": "NA",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
+          },
+          "authenticatorAttachment": "platform",
+          "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
+          "type": "public-key"
+        };
+      })
+      .success(function(user, info) {
+        expect(user).to.deep.equal({ id: '248289761001' });
+        expect(info).to.be.undefined;
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should verify resident key on Google Chrome on Mac OS X without Touch ID via level 3
+  
   it('should register a YubiKey 5C with no attestation', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
@@ -37,7 +74,6 @@ describe('Strategy', function() {
           "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
           "type": "public-key"
         };
-        
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
@@ -76,7 +112,6 @@ describe('Strategy', function() {
           "id": "noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw",
           "type": "public-key"
         };
-        
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
@@ -115,7 +150,6 @@ describe('Strategy', function() {
           "id": "12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw",
           "type": "public-key"
         };
-        
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
