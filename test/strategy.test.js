@@ -11,6 +11,41 @@ describe('Strategy', function() {
     expect(strategy.name).to.equal('webauthn');
   });
   
+  it('should verify credential', function(done) {
+    var strategy = new Strategy(function(id, cb) {
+      expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
+      var publicKey =
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE/6j9N8S3dBWutrvVJBB3MrU5uipV\n' +
+'D8+rZ0GboVEJMPT3HZmICG/06CAPSqcDchP+qLa0N8Tvp9FSmguCnvLtZg==\n' +
+'-----END PUBLIC KEY-----\n';
+      return cb(null, { id: '248289761001' }, publicKey);
+    }, function(){});
+    
+    chai.passport.use(strategy)
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3000';
+        req.body = {
+          rawId: 'JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q',
+          response: {
+            authenticatorData: 'SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MBAAAANw',
+            signature: 'MEYCIQDfGFxZvtHzGZUzfgxIjD4BaF1YF8BKOSGwk-rVkydv3wIhAOZn4lufNS5zptLpfHf-6YPcauXW5MJW_UVnVIHvPzGD',
+            userHandle: null,
+            clientDataJSON: 'eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTlRZM09BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlLCJvdGhlcl9rZXlzX2Nhbl9iZV9hZGRlZF9oZXJlIjoiZG8gbm90IGNvbXBhcmUgY2xpZW50RGF0YUpTT04gYWdhaW5zdCBhIHRlbXBsYXRlLiBTZWUgaHR0cHM6Ly9nb28uZ2wveWFiUGV4In0'
+          },
+          id: 'JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q',
+          type: 'public-key'
+        };
+      })
+      .success(function(user, info) {
+        expect(user).to.deep.equal({ id: '248289761001' });
+        expect(info).to.be.undefined;
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should verify credential
   
   it('should verify Google Chrome on Mac OS X without Touch ID via level 3', function(done) {
     var strategy = new Strategy(function(id, cb) {
