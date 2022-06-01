@@ -12,7 +12,7 @@ describe('Strategy', function() {
   });
   
   
-  it('should verify resident key on Google Chrome on Mac OS X without Touch ID via level 3', function(done) {
+  it('should verify Google Chrome on Mac OS X without Touch ID via level 3', function(done) {
     var strategy = new Strategy(function(id, cb) {
       expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
       var publicKey =
@@ -47,7 +47,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should verify resident key on Google Chrome on Mac OS X without Touch ID via level 3
+  }); // should verify Google Chrome on Mac OS X without Touch ID via level 3
   
   it('should register a YubiKey 5C with no attestation', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
