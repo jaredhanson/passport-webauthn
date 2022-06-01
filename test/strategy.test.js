@@ -49,7 +49,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should verify Google Chrome on Mac OS X without Touch ID via level 3
   
-  it('should register a YubiKey 5C with no attestation', function(done) {
+  it('should register YubiKey 5C with no attestation', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
@@ -82,7 +82,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register a YubiKey 5C with no attestation
+  }); // should register YubiKey 5C with no attestation
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
@@ -122,7 +122,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3
   
-  it('should register a YubiKey 4 with no attestation via level 3', function(done) {
+  it('should register YubiKey 4 with no attestation via level 3', function(done) {
     var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
       
       expect(id).to.equal('12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw');
@@ -158,6 +158,6 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register a YubiKey 4 with no attestation via level 3
+  }); // should register YubiKey 4 with no attestation via level 3
   
 });
