@@ -7,61 +7,6 @@ var chai = require('chai')
 
 describe.skip('Strategy2', function() {
 
-  describe('registering a valid credential from YubiKey 5C with no attestation', function() {
-    var verify = sinon.spy(function(id, cb) {
-    });
-    var register = sinon.spy(function(user, id, publicKey, cb) {
-      return cb(null, true);
-    });
-  
-    var strategy = new Strategy(verify, register);
-    var user;
-  
-    before(function(done) {
-      chai.passport(strategy)
-        .success(function(u) {
-          user = u;
-          done();
-        })
-        .error(function(err) {
-          console.log(err);
-        })
-        .req(function(req) {
-          req.headers.host = 'localhost:3000';
-          req.connection = {};
-          req.user = { id: '500' };
-          
-          req.body = {
-            "rawId": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
-            "response": {
-              "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVjESZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NBAAAAOgAAAAAAAAAAAAAAAAAAAAAAQJ_dGSPhcDwPR0-Y7WYp7N90bWntWc9cy56A0fcgo-ScM9jwenyUdCgj2XoTkQfobePJkX23AOddnJw8n20ENDmlAQIDJiABIVggp-ZH3WpsBVUojVZ1D1BufQoSMplIVbiKl-g4PojQCfkiWCBkt-eEtwaQkv2aRTTLMVHr0gucag7QbOA0m_WyFtuXIg",
-              "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
-            },
-            "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
-            "type": "public-key"
-          };
-        })
-        .authenticate();
-    });
-  
-    it('should register credential', function() {
-      var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
-'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEp+ZH3WpsBVUojVZ1D1BufQoSMplI\n' +
-'VbiKl+g4PojQCflkt+eEtwaQkv2aRTTLMVHr0gucag7QbOA0m/WyFtuXIg==\n' +
-'-----END PUBLIC KEY-----\n';
-      
-      expect(register).to.be.calledWith({ id: '500' }, 'n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ', publicKey);
-    });
-  
-    it('should supply user', function() {
-      expect(user).to.deep.equal({ id: '500' });
-    });
-    
-    it('should not call verify', function() {
-      expect(verify).to.not.have.been.called;
-    });
-  });
-
   describe('registering a valid credential from YubiKey 5C with direct attestation in fido-u2f format', function() {
     var verify = sinon.spy(function(id, cb) {
     });
