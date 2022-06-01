@@ -85,6 +85,6 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register a YubiKey 4 with no attestation
+  }); // should register a YubiKey 4 with no attestation via level 3
   
 });
