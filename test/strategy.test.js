@@ -251,8 +251,7 @@ describe('Strategy', function() {
   }); // should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3
   
   it('should register YubiKey 4 with no attestation via level 3', function(done) {
-    var strategy = new Strategy(function(){}, function(id, publicKey, cb) {
-      
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -261,9 +260,7 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       return cb(null, { id: '248289761001' });
-    });
-  
-    chai.passport.use(strategy)
+    }))
       .request(function(req) {
         req.connection = {};
         req.headers.host = 'localhost:3000';
