@@ -313,11 +313,11 @@ describe('Strategy', function() {
   
   it('should fail when signature is invalid', function(done) {
     chai.passport.use(new Strategy(function(id, cb) {
-      expect(id).to.equal('VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA');
+      expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
       var publicKey =
 '-----BEGIN PUBLIC KEY-----\n' +
-'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaLB+Aejtfh9S/i+iU1IfvQswbRlS\n' +
-'EGu/tcXrRjnscbMNflAnHVHDeb4PzlexGEjGgrsZiuLmlq+ZTOJjOsGOeQ==\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESo+uMzzeOSkrHdJFfK98BdlhtydB\n' +
+'sYCSfcQItYWDgr7qFbPLcRIiuS3ejIa4iFHAe01oslaURGWUxtby39TpQA==\n' +
 '-----END PUBLIC KEY-----\n';
       return cb(null, { id: '248289761001' }, publicKey);
     }, function(){}))
@@ -325,15 +325,15 @@ describe('Strategy', function() {
         req.connection = {};
         req.headers.host = 'localhost:3000';
         req.body = {
-          "rawId": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
+          "rawId": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "response": {
-            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MBAAAAUA",
-            "signature": "XEUCICG43QV-jSPIChOZOCh3KO07dtM32dBXFBBOlk34m4BIAiEAp7iRKyhglWg7m8OezNieFOzxZdRl42FyDaXq6jbt45g",
-            "userHandle": null,
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MFAAAAAA",
+            "signature": "XEYCIQCCKxA70welhqy9PZH-sLj09VtYRIkA9w-MryjXfIOc5QIhAOUIqjOk8jkH-vP50sCxRXSb6ZG-iT6bgheMxDHB3JqM",
+            "userHandle": "NA",
             "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
           },
-          "authenticatorAttachment": null,
-          "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
+          "authenticatorAttachment": "platform",
+          "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
       })
