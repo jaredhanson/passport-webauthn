@@ -311,6 +311,49 @@ describe('Strategy', function() {
       .authenticate();
   }); // should verify YubiKey 4 signature counter via level 3
   
+  it('should fail when signature counter is less than or equal to stored sign count', function(done) {
+    function verifySignCount(id, signCount, storedSignCount, cb) {
+      expect(id).to.equal('VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA');
+      expect(signCount).to.equal(80);
+      expect(storedSignCount).to.equal(81);
+      return cb(null, false);
+    }
+    var verifySignCountSpy = sinon.spy(verifySignCount);
+    
+    chai.passport.use(new Strategy(function(id, cb) {
+      expect(id).to.equal('VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA');
+      var publicKey =
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaLB+Aejtfh9S/i+iU1IfvQswbRlS\n' +
+'EGu/tcXrRjnscbMNflAnHVHDeb4PzlexGEjGgrsZiuLmlq+ZTOJjOsGOeQ==\n' +
+'-----END PUBLIC KEY-----\n';
+      return cb(null, { id: '248289761001' }, publicKey, { signCount: 81 });
+    }, verifySignCountSpy, function(){}))
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3000';
+        req.body = {
+          "rawId": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
+          "response": {
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MBAAAAUA",
+            "signature": "MEUCICG43QV-jSPIChOZOCh3KO07dtM32dBXFBBOlk34m4BIAiEAp7iRKyhglWg7m8OezNieFOzxZdRl42FyDaXq6jbt45g",
+            "userHandle": null,
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
+          },
+          "authenticatorAttachment": null,
+          "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
+          "type": "public-key"
+        };
+      })
+      .fail(function(challenge, status) {
+        expect(challenge).to.deep.equal({ message: 'Cloned authenticator detected' });
+        expect(status).to.equal(403);
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should fail when signature counter is less than or equal to stored sign count
+  
   it('should register YubiKey 5C with no attestation', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
