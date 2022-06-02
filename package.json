@@ -23,7 +23,7 @@
     "passport-strategy": "1.x.x"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
+    "chai": "^4.0.0",
     "chai-passport-strategy": "3.x.x",
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
