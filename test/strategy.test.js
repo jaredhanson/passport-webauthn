@@ -311,6 +311,41 @@ describe('Strategy', function() {
       .authenticate();
   }); // should verify YubiKey 4 signature counter via level 3
   
+  it('should fail when origin does not match', function(done) {
+    chai.passport.use(new Strategy(function(id, cb) {
+      expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
+      var publicKey =
+'-----BEGIN PUBLIC KEY-----\n' +
+'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESo+uMzzeOSkrHdJFfK98BdlhtydB\n' +
+'sYCSfcQItYWDgr7qFbPLcRIiuS3ejIa4iFHAe01oslaURGWUxtby39TpQA==\n' +
+'-----END PUBLIC KEY-----\n';
+      return cb(null, { id: '248289761001' }, publicKey);
+    }, function(){}))
+      .request(function(req) {
+        req.connection = {};
+        req.headers.host = 'localhost:3999';
+        req.body = {
+          "rawId": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
+          "response": {
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MFAAAAAA",
+            "signature": "MEYCIQCCKxA70welhqy9PZH-sLj09VtYRIkA9w-MryjXfIOc5QIhAOUIqjOk8jkH-vP50sCxRXSb6ZG-iT6bgheMxDHB3JqM",
+            "userHandle": "NA",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTVRJek5BIiwib3JpZ2luIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
+          },
+          "authenticatorAttachment": "platform",
+          "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
+          "type": "public-key"
+        };
+      })
+      .fail(function(challenge, status) {
+        expect(challenge).to.deep.equal({ message: 'Origin mismatch' });
+        expect(status).to.equal(403);
+        done();
+      })
+      .error(done)
+      .authenticate();
+  }); // should fail when origin does not match
+  
   it('should fail when signature is invalid', function(done) {
     chai.passport.use(new Strategy(function(id, cb) {
       expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
