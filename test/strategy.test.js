@@ -572,7 +572,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register YubiKey 5C with attestation in FIDO U2F format
   
-  it('should register Soft U2F with direct attestation in FIDO U2F format', function(done) {
+  it('should register Soft U2F with attestation in FIDO U2F format', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       expect(publicKey).to.equal(
@@ -610,7 +610,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register Soft U2F with direct attestation in FIDO U2F format
+  }); // should register Soft U2F with attestation in FIDO U2F format
   
   it('should register Touch ID with no attestation via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
@@ -685,7 +685,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register Touch ID with no attestation using flags and signature counter via level 2
   
-  it('should register Touch ID with direct attestation in packed format via level 2', function(done) {
+  it('should register Touch ID with attestation in packed format via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
       expect(id).to.equal('AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt');
       expect(publicKey).to.equal(
@@ -719,7 +719,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register Touch ID with direct attestation in packed format via level 2
+  }); // should register Touch ID with attestation in packed format via level 2
   
   it('should register YubiKey 5C with direct attestation in packed format via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
