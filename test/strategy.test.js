@@ -686,7 +686,7 @@ describe('Strategy', function() {
   }); // should register Touch ID with no attestation using flags and signature counter via level 2
   
   it('should register Touch ID with attestation in packed format via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -694,6 +694,10 @@ describe('Strategy', function() {
 'woQeUORJDXHXglTFEiUWB4qw52KN/aeRYuqb6jDTY1oIsQlgm1WwFcxIxA==\n' +
 '-----END PUBLIC KEY-----\n'
       );
+      expect(attestation).to.deep.equal({
+        type: 'self',
+        trustPath: []
+      });
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
