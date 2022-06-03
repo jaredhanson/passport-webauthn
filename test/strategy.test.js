@@ -548,6 +548,7 @@ describe('Strategy', function() {
       expect(attestation.trustPath[0].subject).to.equal('C=SE\nO=Yubico AB\nOU=Authenticator Attestation\nCN=Yubico U2F EE Serial 413943488');
       expect(attestation.trustPath[0].serialNumber).to.equal('18AC46C0');
       expect(attestation.trustPath[0].fingerprint).to.equal('E7:D0:92:BA:19:2F:DB:BB:2F:36:55:28:32:D6:16:12:69:71:A2:69');
+      
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
@@ -725,8 +726,8 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register Touch ID with attestation in packed format via level 2
   
-  it('should register YubiKey 5C with direct attestation in packed format via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+  it('should register YubiKey 5C with attestation in packed format via level 2', function(done) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -734,6 +735,14 @@ describe('Strategy', function() {
 'RqQlUaVoVKm7XTAciKioZJxh8i9dm8znJlMwnEeqDP5BNwonyqfTBTnC6Q==\n' +
 '-----END PUBLIC KEY-----\n'
       );
+      
+      expect(attestation.type).to.be.undefined;
+      expect(attestation.trustPath.length).to.equal(1);
+      expect(attestation.trustPath[0].issuer).to.equal('CN=Yubico U2F Root CA Serial 457200631');
+      expect(attestation.trustPath[0].subject).to.equal('C=SE\nO=Yubico AB\nOU=Authenticator Attestation\nCN=Yubico U2F EE Serial 413943488');
+      expect(attestation.trustPath[0].serialNumber).to.equal('18AC46C0');
+      expect(attestation.trustPath[0].fingerprint).to.equal('E7:D0:92:BA:19:2F:DB:BB:2F:36:55:28:32:D6:16:12:69:71:A2:69');
+      
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
@@ -757,7 +766,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register YubiKey 5C with direct attestation in packed format via level 2
+  }); // should register YubiKey 5C with attestation in packed format via level 2
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
