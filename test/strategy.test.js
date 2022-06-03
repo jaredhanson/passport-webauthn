@@ -532,8 +532,8 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register YubiKey 5C with no attestation using flags and signature counter
   
-  it('should register YubiKey 5C with direct attestation in fido-u2f format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+  it('should register YubiKey 5C with attestation in fido-u2f format', function(done) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -541,6 +541,13 @@ describe('Strategy', function() {
 'D8+rZ0GboVEJMPT3HZmICG/06CAPSqcDchP+qLa0N8Tvp9FSmguCnvLtZg==\n' +
 '-----END PUBLIC KEY-----\n'
       );
+      
+      expect(attestation.type).to.be.undefined;
+      expect(attestation.trustPath.length).to.equal(1);
+      expect(attestation.trustPath[0].issuer).to.equal('CN=Yubico U2F Root CA Serial 457200631');
+      expect(attestation.trustPath[0].subject).to.equal('C=SE\nO=Yubico AB\nOU=Authenticator Attestation\nCN=Yubico U2F EE Serial 413943488');
+      expect(attestation.trustPath[0].serialNumber).to.equal('18AC46C0');
+      expect(attestation.trustPath[0].fingerprint).to.equal('E7:D0:92:BA:19:2F:DB:BB:2F:36:55:28:32:D6:16:12:69:71:A2:69');
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
@@ -563,7 +570,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register YubiKey 5C with direct attestation in fido-u2f format
+  }); // should register YubiKey 5C with attestation in fido-u2f format
   
   it('should register Soft U2F with direct attestation in fido-u2f format', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
