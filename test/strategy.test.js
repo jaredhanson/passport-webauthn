@@ -532,7 +532,7 @@ describe('Strategy', function() {
       .authenticate();
   }); // should register YubiKey 5C with no attestation using flags and signature counter
   
-  it('should register YubiKey 5C with attestation in fido-u2f format', function(done) {
+  it('should register YubiKey 5C with attestation in FIDO U2F format', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       expect(publicKey).to.equal(
@@ -570,10 +570,10 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register YubiKey 5C with attestation in fido-u2f format
+  }); // should register YubiKey 5C with attestation in FIDO U2F format
   
-  it('should register Soft U2F with direct attestation in fido-u2f format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+  it('should register Soft U2F with direct attestation in FIDO U2F format', function(done) {
+    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
       expect(id).to.equal('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -581,6 +581,13 @@ describe('Strategy', function() {
 'V+dShmc0kKQoWOhxDyslVXoA1M7RYzrpFrGWEK3z1Hk9Wso1GeUBnPrXJQ==\n' +
 '-----END PUBLIC KEY-----\n'
       );
+      
+      expect(attestation.type).to.be.undefined;
+      expect(attestation.trustPath.length).to.equal(1);
+      expect(attestation.trustPath[0].issuer).to.equal('CN=Soft U2F\nO=GitHub Inc.\nOU=Security');
+      expect(attestation.trustPath[0].subject).to.equal('CN=Soft U2F\nO=GitHub Inc.\nOU=Security');
+      expect(attestation.trustPath[0].serialNumber).to.equal('01');
+      expect(attestation.trustPath[0].fingerprint).to.equal('D6:45:25:FF:AE:7C:57:C3:7A:90:4D:E0:83:BE:05:BC:ED:C7:F9:32');
       return cb(null, { id: '248289761001' });
     }))
       .request(function(req) {
@@ -603,7 +610,7 @@ describe('Strategy', function() {
       })
       .error(done)
       .authenticate();
-  }); // should register Soft U2F with direct attestation in fido-u2f format
+  }); // should register Soft U2F with direct attestation in FIDO U2F format
   
   it('should register Touch ID with no attestation via level 2', function(done) {
     chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
