@@ -35,10 +35,17 @@ describe('Strategy', function() {
           id: 'JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q',
           type: 'public-key'
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'NTY3OA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -70,10 +77,17 @@ describe('Strategy', function() {
           "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -106,10 +120,17 @@ describe('Strategy', function() {
           "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -146,10 +167,17 @@ describe('Strategy', function() {
           "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -181,10 +209,17 @@ describe('Strategy', function() {
           "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -217,10 +252,17 @@ describe('Strategy', function() {
           "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -257,10 +299,17 @@ describe('Strategy', function() {
           "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -300,11 +349,18 @@ describe('Strategy', function() {
           "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.deep.equal({ signCount: 79 });
         expect(verifySignCountSpy).to.have.been.called;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -336,10 +392,17 @@ describe('Strategy', function() {
           "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .fail(function(challenge, status) {
         expect(challenge).to.deep.equal({ message: 'Origin mismatch' });
         expect(status).to.equal(403);
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -371,10 +434,17 @@ describe('Strategy', function() {
           "id": "iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .fail(function(challenge, status) {
         expect(challenge).to.deep.equal({ message: 'Invalid signature' });
         expect(status).to.equal(403);
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -414,10 +484,17 @@ describe('Strategy', function() {
           "id": "VjXl8fuJXIAqLg-BVrR5oeLLfee6gBGKXdMxo6xtMySugJfU2HNvTJk84T1DgFYtJDpDrwL2Bg_QM4xQwVAutA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .fail(function(challenge, status) {
         expect(challenge).to.deep.equal({ message: 'Cloned authenticator detected' });
         expect(status).to.equal(403);
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -447,10 +524,17 @@ describe('Strategy', function() {
           "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -484,10 +568,17 @@ describe('Strategy', function() {
           "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -522,10 +613,17 @@ describe('Strategy', function() {
           "id": "n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -563,10 +661,17 @@ describe('Strategy', function() {
           "id": "JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -603,10 +708,17 @@ describe('Strategy', function() {
           "id": "GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -637,10 +749,17 @@ describe('Strategy', function() {
           "id": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -676,10 +795,17 @@ describe('Strategy', function() {
           "id": "Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -704,8 +830,6 @@ describe('Strategy', function() {
       .request(function(req) {
         req.headers.host = 'localhost:3000';
         req.connection = {};
-        req.user = { id: '500' };
-        
         req.body = {
           "rawId": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
           "response": {
@@ -716,10 +840,17 @@ describe('Strategy', function() {
           "id": "AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -758,10 +889,17 @@ describe('Strategy', function() {
           "id": "i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -793,10 +931,17 @@ describe('Strategy', function() {
           "id": "noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -834,10 +979,17 @@ describe('Strategy', function() {
           "id": "noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -869,10 +1021,17 @@ describe('Strategy', function() {
           "id": "12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'MTIzNA' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
@@ -926,10 +1085,17 @@ describe('Strategy', function() {
           "id": "AZD7huwZVx7aW1efRa6Uq3JTQNorj3qA9yrLINXEcgvCQYtWiSQa1eOIVrXfCmip6MzP8KaITOvRLjy3TUHO7_c",
           "type": "public-key"
         };
+        req.session = {
+          messages: [],
+          webauthn: { challenge: 'Tf65bS6D5temh2BwvptqgBPb25iZDRxjwC5ans91IIJDrcrOpnWTK4LVgFjeUV4GDMe44w8SI5NsZssIXTUvDg' }
+        };
       })
       .success(function(user, info) {
         expect(user).to.deep.equal({ id: '248289761001' });
         expect(info).to.be.undefined;
+        expect(this.session).to.deep.equal({
+          messages: []
+        });
         done();
       })
       .error(done)
