@@ -453,7 +453,10 @@ describe('Strategy', function() {
   }); // should fail when signature counter is less than or equal to stored sign count
   
   it('should register YubiKey 5C with no attestation', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -477,7 +480,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -493,7 +503,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with no attestation
   
   it('should register YubiKey 5C with no attestation using flags', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -521,7 +534,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -537,7 +557,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with no attestation using flags
   
   it('should register YubiKey 5C with no attestation using flags and signature counter', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -566,7 +589,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -582,7 +612,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with no attestation using flags and signature counter
   
   it('should register YubiKey 5C with attestation in none format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('n90ZI-FwPA9HT5jtZins33Rtae1Zz1zLnoDR9yCj5Jwz2PB6fJR0KCPZehORB-ht48mRfbcA512cnDyfbQQ0OQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -612,7 +645,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -628,7 +668,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with attestation in none format
   
   it('should register YubiKey 5C with attestation in FIDO U2F format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('JYrR3EvvQJNqG0i_OwJckOkbzq4YJWviotG4hig9wA_Qdxm-eBEHfsYqBJKTtXMasL-RD9CFOlcag48icK3E8Q');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -661,7 +704,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -677,7 +727,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with attestation in FIDO U2F format
   
   it('should register Soft U2F with attestation in FIDO U2F format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('GU0lmsssQL3nKuu3Q5YtBTVfTLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -709,7 +762,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -725,7 +785,10 @@ describe('Strategy', function() {
   }); // should register Soft U2F with attestation in FIDO U2F format
   
   it('should register Touch ID with no attestation via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -750,7 +813,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -766,7 +836,10 @@ describe('Strategy', function() {
   }); // should register Touch ID with no attestation via level 2
   
   it('should register Touch ID with no attestation using flags and signature counter via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('Abqu4O_U5dE71w4TuJ-zW1IrpdCgZftpnR-hKqfTWheMc8SZIaky7qXAyiDzPSqRtPUC');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -796,7 +869,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -812,7 +892,10 @@ describe('Strategy', function() {
   }); // should register Touch ID with no attestation using flags and signature counter via level 2
   
   it('should register Touch ID with attestation in packed format via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('AIJBqkpwDr_4baNTt2_u_kG-sGqZnr4WZ63y911uY9qB6u6JTcB-9MQkyQzruTOBRi9vKluqAZqBWio2tFem-SgrUD7RI7i_Bpajs5N6uG_cCdycJwE-4Xjt');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -842,7 +925,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -858,7 +948,10 @@ describe('Strategy', function() {
   }); // should register Touch ID with attestation in packed format via level 2
   
   it('should register YubiKey 5C with attestation in packed format via level 2', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('i18s3M25qA39Y6vOXR2_TOCglKz8kxFHHzx6Jpnk_Y9THMVBV85Vnd5IyjtNpFIS6Sp_ssg4ZJtAW6UARMStUQ');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -892,7 +985,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -908,7 +1008,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 5C with attestation in packed format via level 2
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -934,7 +1037,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -950,7 +1060,10 @@ describe('Strategy', function() {
   }); // should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3
   
   it('should register Google Chrome on Mac OS X without Touch ID with no attestation using flags, signature counter, and transports via level 3', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('noMuGuaaVLubAVjuS6Z2BYrrBpajYhtjnFgvSjk0IV1LJeVrupbpnw');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -982,7 +1095,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -998,7 +1118,10 @@ describe('Strategy', function() {
   }); // should register Google Chrome on Mac OS X without Touch ID with no attestation via level 3
   
   it('should register YubiKey 4 with no attestation via level 3', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('12T-jjmoUpVJ-1z7Bx-OYFo-MxDj8_xbne6iytC9scwbBjutzSUNdK9wphc4oNnmPqSbp-6UDba3ztUrAy2dcw');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -1024,7 +1147,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -1040,7 +1170,10 @@ describe('Strategy', function() {
   }); // should register YubiKey 4 with no attestation via level 3
   
   it('should register credential with attestation in Android SafteyNet format', function(done) {
-    chai.passport.use(new Strategy(function(){}, function(id, publicKey, flags, signCount, transports, attestation, cb) {
+    chai.passport.use(new Strategy(function(){}, function(user, id, publicKey, flags, signCount, transports, attestation, cb) {
+      expect(Buffer.compare(user.id, Buffer.from([0x77, 0xe3, 0x6b, 0xba, 0x10, 0xac, 0x44, 0xb3, 0xb0, 0x85, 0xa9, 0xdf, 0x9f, 0xbd, 0x0e, 0xda]))).to.equal(0);
+      expect(user.name).to.equal('alice');
+      expect(user.displayName).to.equal('Alice Smith');
       expect(id).to.equal('AZD7huwZVx7aW1efRa6Uq3JTQNorj3qA9yrLINXEcgvCQYtWiSQa1eOIVrXfCmip6MzP8KaITOvRLjy3TUHO7_c');
       expect(publicKey).to.equal(
 '-----BEGIN PUBLIC KEY-----\n' +
@@ -1088,7 +1221,14 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'Tf65bS6D5temh2BwvptqgBPb25iZDRxjwC5ans91IIJDrcrOpnWTK4LVgFjeUV4GDMe44w8SI5NsZssIXTUvDg' }
+          webauthn: {
+            challenge: 'Tf65bS6D5temh2BwvptqgBPb25iZDRxjwC5ans91IIJDrcrOpnWTK4LVgFjeUV4GDMe44w8SI5NsZssIXTUvDg',
+            user: {
+              id: 'd-NruhCsRLOwhanfn70O2g',
+              name: 'alice',
+              displayName: 'Alice Smith'
+            }
+          }
         };
       })
       .success(function(user, info) {
