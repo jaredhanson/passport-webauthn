@@ -593,6 +593,7 @@ describe('Strategy', function() {
       expect(transports).to.be.undefined;
       expect(attestation).to.deep.equal({
         type: 'none',
+        format: 'none',
         trustPath: []
       })
       return cb(null, { id: '248289761001' });
@@ -637,6 +638,7 @@ describe('Strategy', function() {
       );
       
       expect(attestation.type).to.be.undefined;
+      expect(attestation.format).to.equal('fido-u2f');
       expect(attestation.trustPath.length).to.equal(1);
       expect(attestation.trustPath[0].issuer).to.equal('CN=Yubico U2F Root CA Serial 457200631');
       expect(attestation.trustPath[0].subject).to.equal('C=SE\nO=Yubico AB\nOU=Authenticator Attestation\nCN=Yubico U2F EE Serial 413943488');
@@ -685,6 +687,7 @@ describe('Strategy', function() {
       );
       
       expect(attestation.type).to.be.undefined;
+      expect(attestation.format).to.equal('fido-u2f');
       expect(attestation.trustPath.length).to.equal(1);
       expect(attestation.trustPath[0].issuer).to.equal('CN=Soft U2F\nO=GitHub Inc.\nOU=Security');
       expect(attestation.trustPath[0].subject).to.equal('CN=Soft U2F\nO=GitHub Inc.\nOU=Security');
@@ -819,6 +822,7 @@ describe('Strategy', function() {
       );
       expect(attestation).to.deep.equal({
         type: 'self',
+        format: 'packed',
         trustPath: []
       });
       return cb(null, { id: '248289761001' });
@@ -864,6 +868,7 @@ describe('Strategy', function() {
       );
       
       expect(attestation.type).to.be.undefined;
+      expect(attestation.format).to.equal('packed');
       expect(attestation.trustPath.length).to.equal(1);
       expect(attestation.trustPath[0].issuer).to.equal('CN=Yubico U2F Root CA Serial 457200631');
       expect(attestation.trustPath[0].subject).to.equal('C=SE\nO=Yubico AB\nOU=Authenticator Attestation\nCN=Yubico U2F EE Serial 413943488');
@@ -1044,8 +1049,8 @@ describe('Strategy', function() {
 '-----END PUBLIC KEY-----\n'
       );
       
-      expect(attestation.format).to.equal('android-safetynet');
       expect(attestation.type).to.equal('basic');
+      expect(attestation.format).to.equal('android-safetynet');
       expect(attestation.trustPath.length).to.equal(2);
       expect(attestation.trustPath[0].issuer).to.equal('C=US\nO=Google Trust Services\nCN=GTS CA 1O1');
       expect(attestation.trustPath[0].subject).to.equal('C=US\nST=California\nL=Mountain View\nO=Google LLC\nCN=attest.android.com');
