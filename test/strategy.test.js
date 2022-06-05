@@ -97,7 +97,7 @@ describe('Strategy', function() {
   it('should verify Google Chrome on Mac OS X without Touch ID using user handle via level 3', function(done) {
     chai.passport.use(new Strategy(function(id, userHandle, cb) {
       expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
-      expect(userHandle).to.equal('4');
+      expect(Buffer.compare(userHandle, Buffer.from('4'))).to.equal(0);
       var publicKey =
 '-----BEGIN PUBLIC KEY-----\n' +
 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESo+uMzzeOSkrHdJFfK98BdlhtydB\n' +
@@ -140,7 +140,7 @@ describe('Strategy', function() {
   it('should verify Google Chrome on Mac OS X without Touch ID using user handle and flags via level 3', function(done) {
     chai.passport.use(new Strategy(function(id, userHandle, flags, cb) {
       expect(id).to.equal('iFxmcVm7eyw5q34uNELR_lSs4pyeL8CJrHN8ZZanOTrn5JxIMS7Z1Km-ZA');
-      expect(userHandle).to.equal('4');
+      expect(Buffer.compare(userHandle, Buffer.from('4'))).to.equal(0);
       expect(flags).to.deep.equal({
         userPresent: true,
         userVerified: true
