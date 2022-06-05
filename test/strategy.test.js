@@ -37,7 +37,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'NTY3OA' }
+          webauthn: {
+            challenge: 'NTY3OA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -211,7 +216,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -254,7 +264,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -301,7 +316,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -351,7 +371,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .success(function(user, info) {
@@ -486,7 +511,12 @@ describe('Strategy', function() {
         };
         req.session = {
           messages: [],
-          webauthn: { challenge: 'MTIzNA' }
+          webauthn: {
+            challenge: 'MTIzNA',
+            user: {
+              id: 'NA'
+            }
+          }
         };
       })
       .fail(function(challenge, status) {
