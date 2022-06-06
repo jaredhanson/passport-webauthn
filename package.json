@@ -36,7 +36,7 @@
   "main": "./lib",
   "dependencies": {
     "base64url": "^3.0.1",
-    "cbor": "^5.1.0",
+    "cbor": "^8.1.0",
     "clone": "^2.1.2",
     "cose-to-jwk": "^1.1.0",
     "jwk-to-pem": "^2.0.5",
