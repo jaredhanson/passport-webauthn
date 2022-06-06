@@ -1,4 +1,4 @@
-# passport-webauthn
+# passport-fido2-webauthn
 
 [Passport](https://www.passportjs.org/) strategy for authenticating
 with [Web Authentication](https://www.w3.org/TR/webauthn-2/).
@@ -8,6 +8,12 @@ By plugging into Passport, WebAuthn authentication can be easily and
 unobtrusively integrated into any application or framework that supports
 [Connect](https://github.com/senchalabs/connect#readme)-style middleware,
 including [Express](https://expressjs.com/).
+
+## Install
+
+```sh
+$ npm install passport-fido2-webauthn
+```
 
 ## Usage
 
@@ -40,8 +46,8 @@ the app is free to use any database of its choosing.  The example below
 illustrates usage of a SQL database.
 
 ```js
-var WebAuthnStrategy = require('passport-webauthn');
-var SessionChallengeStore = require('passport-webauthentication').SessionChallengeStore;
+var WebAuthnStrategy = require('passport-fido2-webauthn');
+var SessionChallengeStore = require('passport-fido2-webauthn').SessionChallengeStore;
 
 var store = new SessionChallengeStore();
 
