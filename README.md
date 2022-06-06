@@ -92,6 +92,37 @@ passport.use(new WebAuthnStrategy({ store: store },
 ));
 ```
 
+#### Define Routes
+
+Two routes are needed in order to allow users to log in with their biometrics or
+security keys.
+
+The first route generates a randomized challenge, saves it in the
+`ChallengeStore`, and sends it to the client-side JavaScript for it to be
+included in the authenticator response.  This is necessary in order to protect
+against replay attacks.
+
+```js
+router.post('/login/public-key/challenge', function(req, res, next) {
+  store.challenge(req, function(err, challenge) {
+    if (err) { return next(err); }
+    res.json({ challenge: base64url.encode(challenge) });
+  });
+});
+```
+
+The second route authenticates the authenticator assertion and logs the user in.
+
+```js
+router.post('/login/public-key',
+  passport.authenticate('webauthn', { failWithError: true }),
+  function(req, res, next) {
+    res.json({ ok: true });
+  },
+  function(err, req, res, next) {
+    res.json({ ok: false });
+  });
+```
 
 ## License
 
