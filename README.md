@@ -26,6 +26,19 @@ account at the OP belongs.  Once it has made a determination, it invokes `cb`
 with the user record and a public key.  The public key is used to
 cryptographically verify the WebAuthn assertion and authentication the user.
 
+This strategy also takes a `register` function as an argument, which is called
+when registering a new credential, and accepts `user`, `id` and `publicKey` as
+arguments.  `user` represents a specific user account with which to associate
+the credential.  `id` identifies the public key credential.  `publicKey` is the
+PEM-encoded public key.
+
+The `register` function is responsible for associating the new credential with
+the account.  Once complete, it invokes `cb` with the user record.
+
+Because the `verify` and `register` functions are supplied by the application,
+the app is free to use any database of its choosing.  The example below
+illustrates usage of a SQL database.
+
 ```js
 var WebAuthnStrategy = require('passport-webauthn');
 var SessionChallengeStore = require('passport-webauthentication').SessionChallengeStore;
