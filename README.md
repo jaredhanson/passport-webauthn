@@ -17,9 +17,10 @@ $ npm install passport-fido2-webauthn
 
 ## Usage
 
-The WebAuthn authentication strategy authenticates users using a public key-
-based credential.  The authenticator which stores this credential is typically a
-biometric sensor built into the user's device or an external security key.
+The WebAuthn authentication strategy authenticates users using a public
+key-based credential.  The authenticator which stores this credential is
+typically a biometric sensor built into the user's device or an external
+security key.
 
 The strategy takes a `verify` function as an argument, which accepts `id` and
 `userHandle` as arguments.  `id` identifies a public key credential that has
