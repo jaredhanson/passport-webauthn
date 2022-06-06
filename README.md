@@ -11,6 +11,68 @@ including [Express](https://expressjs.com/).
 
 ## Usage
 
+The WebAuthn authentication strategy authenticates users using a public key-
+based credential.  The authenticator which stores this credential is typically a
+biometric sensor built into the user's device or an external security key.
+
+The strategy takes a `verify` function as an argument, which accepts `id` and
+`userHandle` as arguments.  `id` identifies a public key credential that has
+been associated with a user's account.  `userHandle` maps the credential to a
+specific user account.  When authenticating a user, this strategy obtains this
+information from a WebAuthn assertion.
+
+The `verify` function is responsible for determining the user to which the
+account at the OP belongs.  Once it has made a determination, it invokes `cb`
+with the user record and a public key.  The public key is used to
+cryptographically verify the WebAuthn assertion and authentication the user.
+
+```js
+var WebAuthnStrategy = require('passport-webauthn');
+var SessionChallengeStore = require('passport-webauthentication').SessionChallengeStore;
+
+var store = new SessionChallengeStore();
+
+passport.use(new WebAuthnStrategy({ store: store },
+  function verify(id, userHandle, cb) {
+    db.get('SELECT * FROM public_key_credentials WHERE external_id = ?', [ id ], function(err, row) {
+      if (err) { return cb(err); }
+      if (!row) { return cb(null, false, { message: 'Invalid key. '}); }
+      var publicKey = row.public_key;
+      db.get('SELECT * FROM users WHERE rowid = ?', [ row.user_id ], function(err, row) {
+        if (err) { return cb(err); }
+        if (!row) { return cb(null, false, { message: 'Invalid key. '}); }
+        if (Buffer.compare(row.handle, userHandle) != 0) {
+          return cb(null, false, { message: 'Invalid key. '});
+        }
+        return cb(null, row, publicKey);
+      });
+    });
+  },
+  function register(user, id, publicKey, cb) {
+    db.run('INSERT INTO users (username, name, handle) VALUES (?, ?, ?)', [
+      user.name,
+      user.displayName,
+      user.id
+    ], function(err) {
+      if (err) { return cb(err); }
+      var newUser = {
+        id: this.lastID,
+        username: user.name,
+        name: user.displayName
+      };
+      db.run('INSERT INTO public_key_credentials (user_id, external_id, public_key) VALUES (?, ?, ?)', [
+        newUser.id,
+        id,
+        publicKey
+      ], function(err) {
+        if (err) { return cb(err); }
+        return cb(null, newUser);
+      });
+    });
+  }
+));
+```
+
 
 ## License
 
