@@ -125,6 +125,12 @@ router.post('/login/public-key',
   });
 ```
 
+## Examples
+
+* [todos-express-webauthn](https://github.com/passport/todos-express-webauthn)
+
+  Illustrates how to use the WebAuthn strategy within an Express application.
+
 ## License
 
 [The MIT License](https://opensource.org/licenses/MIT)
