@@ -135,4 +135,4 @@ router.post('/login/public-key',
 
 [The MIT License](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2011-2022 Jared Hanson <[https://www.jaredhanson.me/](https://www.jaredhanson.me/)>
+Copyright (c) 2019-2022 Jared Hanson <[https://www.jaredhanson.me/](https://www.jaredhanson.me/)>
