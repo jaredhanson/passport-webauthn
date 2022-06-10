@@ -19,8 +19,8 @@ $ npm install passport-fido2-webauthn
 
 The WebAuthn authentication strategy authenticates users using a public
 key-based credential.  The authenticator which stores this credential is
-typically a biometric sensor built into the user's device or an external
-security key.
+typically the user's device, which is unlocked using a PIN or biometric, or an
+external security key.
 
 The strategy takes a `verify` function as an argument, which accepts `id` and
 `userHandle` as arguments.  `id` identifies a public key credential that has
@@ -95,8 +95,8 @@ passport.use(new WebAuthnStrategy({ store: store },
 
 #### Define Routes
 
-Two routes are needed in order to allow users to log in with their biometrics or
-security keys.
+Two routes are needed in order to allow users to log in with their passkey or
+security key.
 
 The first route generates a randomized challenge, saves it in the
 `ChallengeStore`, and sends it to the client-side JavaScript for it to be
