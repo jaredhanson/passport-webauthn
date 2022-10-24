@@ -4,7 +4,7 @@
 with [Web Authentication](https://www.w3.org/TR/webauthn-2/).
 
 This module lets you authenticate using WebAuthn in your Node.js applications.
-By plugging into Passport, WebAuthn authentication can be easily and
+By plugging into Passport, WebAuthn-based sign in can be easily and
 unobtrusively integrated into any application or framework that supports
 [Connect](https://github.com/senchalabs/connect#readme)-style middleware,
 including [Express](https://expressjs.com/).
