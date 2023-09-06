@@ -25,8 +25,8 @@ $ npm install passport-fido2-webauthn
 
 The WebAuthn authentication strategy authenticates users using a public
 key-based credential.  The authenticator which stores this credential is
-typically the user's device, which is unlocked using a PIN or biometric, or an
-external security key.
+typically the user's device or an external security key, either of which may be
+unlocked using a PIN or biometric.
 
 The strategy takes a `verify` function as an argument, which accepts `id` and
 `userHandle` as arguments.  `id` identifies a public key credential that has
@@ -37,7 +37,7 @@ information from a WebAuthn assertion.
 The `verify` function is responsible for determining the user to which the
 account at the OP belongs.  Once it has made a determination, it invokes `cb`
 with the user record and a public key.  The public key is used to
-cryptographically verify the WebAuthn assertion and authentication the user.
+cryptographically verify the WebAuthn assertion, thus authenticating the user.
 
 This strategy also takes a `register` function as an argument, which is called
 when registering a new credential, and accepts `user`, `id` and `publicKey` as
